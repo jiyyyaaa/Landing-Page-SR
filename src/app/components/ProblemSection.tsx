@@ -1,27 +1,92 @@
-import { EyeOff, Database, Zap } from 'lucide-react';
+import { EyeOff, Database, Zap, DollarSign, Clock, TrendingDown } from 'lucide-react';
 
-const problems = [
-  {
-    icon: EyeOff,
-    title: 'Missed Conversations',
-    description:
-      'Blind spots in niche forums and dark social mean you only see a fraction of the true brand conversation happening right now.',
+// ============================================
+// PROBLEM SECTION VARIANT SELECTOR
+// Change this value to switch between content variants:
+// "blindspots" - Focus on missing conversations (general)
+// "startup"    - Focus on startup-specific pain points
+// "tools"      - Focus on existing tool failures
+// ============================================
+const PROBLEM_VARIANT: "blindspots" | "startup" | "tools" = "startup";
+
+const problemContent = {
+  blindspots: {
+    headline: "Your brand isn't the problem",
+    subheadline: "your blind spots are",
+    problems: [
+      {
+        icon: EyeOff,
+        title: 'Missed Conversations',
+        description:
+          'Blind spots in niche forums and dark social mean you only see a fraction of the true brand conversation happening right now.',
+      },
+      {
+        icon: Database,
+        title: 'Overwhelming Volume',
+        description:
+          'Raw data without context is noise. Teams burn hours sorting mentions manually instead of acting on what actually matters.',
+      },
+      {
+        icon: Zap,
+        title: 'Delayed Reactions',
+        description:
+          'By the time a crisis surfaces in your inbox, it\'s already viral. Traditional tools move too slow for the speed of social.',
+      },
+    ],
   },
-  {
-    icon: Database,
-    title: 'Overwhelming Volume',
-    description:
-      'Raw data without context is noise. Teams burn hours sorting mentions manually instead of acting on what actually matters.',
+  startup: {
+    headline: "Startups deserve better",
+    subheadline: "than spreadsheets and Google Alerts",
+    problems: [
+      {
+        icon: DollarSign,
+        title: 'Enterprise Pricing',
+        description:
+          'Social listening tools want $500-2000/mo. That\'s your entire marketing budget. You deserve enterprise features without the enterprise price tag.',
+      },
+      {
+        icon: Clock,
+        title: 'Manual Monitoring',
+        description:
+          'You\'re checking Twitter, Reddit, and HN manually. By the time you find a mention, it\'s hours old. That\'s time you don\'t have.',
+      },
+      {
+        icon: TrendingDown,
+        title: 'No Actionable Insights',
+        description:
+          'Data dumps don\'t help. You need to know what people think and why — not just that someone mentioned you somewhere.',
+      },
+    ],
   },
-  {
-    icon: Zap,
-    title: 'Delayed Reactions',
-    description:
-      'By the time a crisis surfaces in your inbox, it\'s already viral. Traditional tools move too slow for the speed of social.',
+  tools: {
+    headline: "Your tools are failing you",
+    subheadline: "here's why",
+    problems: [
+      {
+        icon: Database,
+        title: 'Data Without Context',
+        description:
+          'Most tools give you raw mentions. What you need is synthesized intelligence — the "so what?" behind the data.',
+      },
+      {
+        icon: EyeOff,
+        title: 'Platform Blind Spots',
+        description:
+          'Twitter-only isn\'t enough. Reddit, LinkedIn, and niche communities are where real conversations happen. You\'re missing them.',
+      },
+      {
+        icon: Zap,
+        title: 'Reactive, Not Proactive',
+        description:
+          'You find out about problems when customers complain. Real monitoring means catching issues before they escalate.',
+      },
+    ],
   },
-];
+};
 
 export default function ProblemSection() {
+  const { headline, subheadline, problems } = problemContent[PROBLEM_VARIANT];
+
   return (
     <section className="w-full px-8 py-24" style={{ background: '#0a1c12' }}>
       <div className="max-w-5xl mx-auto">
@@ -46,7 +111,7 @@ export default function ProblemSection() {
               marginBottom: '0.25rem',
             }}
           >
-            Your brand isn't the problem
+            {headline}
           </h2>
           <p
             style={{
@@ -58,7 +123,7 @@ export default function ProblemSection() {
               lineHeight: 1.2,
             }}
           >
-            your blind spots are
+            {subheadline}
           </p>
         </div>
 

@@ -5,61 +5,140 @@ import AnimateOnScroll from './AnimateOnScroll';
 const IBM = "'IBM Plex Sans', sans-serif";
 const SERIF = "'Playfair Display', Georgia, serif";
 
-const plans = [
-  {
-    name: 'Starter',
-    tagline: 'For solo social managers and small teams.',
-    monthly: 9,
-    annual: 7,
-    cta: 'Start free trial',
-    featured: false,
-    features: [
-      '3 brand keywords',
-      'Twitter & Reddit monitoring',
-      'Daily digest emails',
-      '7-day data history',
-      '1 user seat',
+// ============================================
+// PRICING SECTION VARIANT SELECTOR
+// Change this value to switch between content variants:
+// "original" - Original pricing (Starter/Pro/Enterprise, trial-based)
+// "prd"      - PRD-aligned pricing (Basic/Growth/Premium, demo-first)
+// ============================================
+const PRICING_VARIANT: "original" | "prd" = "prd";
+
+const pricingContent = {
+  original: {
+    headline: "Simple plans,",
+    subheadline: "serious listening",
+    bottomNote: "All plans include a 14-day free trial. No credit card required.",
+    plans: [
+      {
+        name: 'Starter',
+        tagline: 'For solo social managers and small teams.',
+        monthly: 9,
+        annual: 7,
+        cta: 'Start free trial',
+        featured: false,
+        features: [
+          '3 brand keywords',
+          'Twitter & Reddit monitoring',
+          'Daily digest emails',
+          '7-day data history',
+          '1 user seat',
+        ],
+      },
+      {
+        name: 'Pro',
+        tagline: 'For growing brands that need real-time coverage.',
+        monthly: 49,
+        annual: 39,
+        cta: 'Get started',
+        featured: true,
+        badge: 'Most popular',
+        features: [
+          '25 brand keywords',
+          'All platforms + news + forums',
+          'Real-time spike alerts',
+          '6-month data history',
+          'Sentiment & topic analytics',
+          '5 user seats',
+          'Slack & email notifications',
+        ],
+      },
+      {
+        name: 'Enterprise',
+        tagline: 'For large teams with complex brand portfolios.',
+        monthly: 89,
+        annual: 72,
+        cta: 'Talk to sales',
+        featured: false,
+        features: [
+          'Unlimited keywords',
+          'Everything in Pro',
+          'Unlimited data history',
+          'Custom API access',
+          'Dedicated account manager',
+          'SSO & advanced permissions',
+          'SLA & priority support',
+        ],
+      },
     ],
   },
-  {
-    name: 'Pro',
-    tagline: 'For growing brands that need real-time coverage.',
-    monthly: 49,
-    annual: 39,
-    cta: 'Get started',
-    featured: true,
-    badge: 'Most popular',
-    features: [
-      '25 brand keywords',
-      'All platforms + news + forums',
-      'Real-time spike alerts',
-      '6-month data history',
-      'Sentiment & topic analytics',
-      '5 user seats',
-      'Slack & email notifications',
+  prd: {
+    headline: "Startup pricing,",
+    subheadline: "enterprise features",
+    bottomNote: "All plans require a demo call to get started. We'll customize your setup based on your needs.",
+    plans: [
+      {
+        name: 'Basic',
+        tagline: 'Perfect for early-stage startups testing the waters.',
+        monthly: 9,
+        annual: 7,
+        cta: 'Request Demo',
+        featured: false,
+        features: [
+          '1 brand keyword',
+          'Up to 3 competitors',
+          'Twitter & Reddit monitoring',
+          'Brand Health Score',
+          'Weekly email reports',
+          '7-day data history',
+          '1 user seat',
+        ],
+      },
+      {
+        name: 'Growth',
+        tagline: 'For growing startups who need full visibility.',
+        monthly: 49,
+        annual: 39,
+        cta: 'Request Demo',
+        featured: true,
+        badge: 'Most popular',
+        features: [
+          '5 brand keywords',
+          'Up to 10 competitors',
+          'All 5 platforms (Twitter, Reddit, LinkedIn, Facebook, Web)',
+          'AI Narrative Digest (daily)',
+          'Share of Voice analytics',
+          'Priority Triage',
+          'Real-time alerts (5 trigger types)',
+          '90-day data history',
+          '3 user seats',
+        ],
+      },
+      {
+        name: 'Premium',
+        tagline: 'For serious brands who want the full picture.',
+        monthly: 89,
+        annual: 72,
+        cta: 'Request Demo',
+        featured: false,
+        features: [
+          'Unlimited keywords',
+          'Unlimited competitors',
+          'Everything in Growth',
+          '1:1 consulting calls',
+          'Custom report builder',
+          'API access',
+          '1-year data history',
+          '10 user seats',
+          'Priority support',
+        ],
+      },
     ],
   },
-  {
-    name: 'Enterprise',
-    tagline: 'For large teams with complex brand portfolios.',
-    monthly: 89,
-    annual: 72,
-    cta: 'Talk to sales',
-    featured: false,
-    features: [
-      'Unlimited keywords',
-      'Everything in Pro',
-      'Unlimited data history',
-      'Custom API access',
-      'Dedicated account manager',
-      'SSO & advanced permissions',
-      'SLA & priority support',
-    ],
-  },
-];
+};
 
 export default function PricingSection() {
   const [annual, setAnnual] = useState(false);
+  const { headline, subheadline, bottomNote, plans } = pricingContent[PRICING_VARIANT];
 
   return (
     <section id="pricing" className="w-full px-8 py-24" style={{ background: '#0a1c12' }}>
@@ -74,10 +153,10 @@ export default function PricingSection() {
           {/* Headline */}
           <div className="text-center mb-4">
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 700, color: '#ffffff', fontFamily: IBM, lineHeight: 1.15 }}>
-              Simple plans,
+              {headline}
             </h2>
             <p style={{ fontSize: 'clamp(1.7rem, 3.5vw, 2.6rem)', fontWeight: 400, fontStyle: 'italic', color: '#a3c9b4', fontFamily: SERIF, lineHeight: 1.2 }}>
-              serious listening
+              {subheadline}
             </p>
           </div>
 
@@ -176,7 +255,7 @@ export default function PricingSection() {
         {/* Bottom note */}
         <AnimateOnScroll direction="up" delay={300}>
           <p className="text-center mt-10" style={{ fontSize: '0.75rem', color: '#2a5040', fontFamily: IBM }}>
-            All plans include a 14-day free trial. No credit card required.
+            {bottomNote}
           </p>
         </AnimateOnScroll>
 
