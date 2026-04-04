@@ -1,10 +1,27 @@
 import { useEffect, useState } from "react";
 
-const stats = [
-  { value: '50M+', label: 'Conversations Analyzed' },
-  { value: '120+', label: 'Enterprise Brands' },
-  { value: '24/7', label: 'Social Media Listening' },
-];
+// ============================================
+// STATS SECTION VARIANT SELECTOR
+// Change this value to switch between stats display variants:
+// "platform"    - Platform & Feature focused (honest)
+// "capability"  - Capability focused (believable)
+// "hidden"      - Hide stats section entirely
+// ============================================
+const STATS_VARIANT: "platform" | "capability" | "hidden" = "platform";
+
+const statsContent = {
+  platform: [
+    { value: '5', label: 'Platforms Monitored', subtext: 'Twitter, Reddit, LinkedIn, Facebook, Web' },
+    { value: '24/7', label: 'Real-time Monitoring', subtext: 'Never miss a conversation' },
+    { value: '$9', label: 'Starting Price', subtext: 'per month' },
+  ],
+  capability: [
+    { value: '5+', label: 'Platforms', subtext: 'Multi-channel monitoring' },
+    { value: '24hr', label: 'AI Digest', subtext: 'Daily narrative synthesis' },
+    { value: '0-100', label: 'Brand Scoring', subtext: 'Health & risk metrics' },
+  ],
+  hidden: [],
+};
 
 export default function LogoSection() {
   const [showStats, setShowStats] = useState(false);
@@ -13,6 +30,13 @@ export default function LogoSection() {
     const timer = setTimeout(() => setShowStats(true), 200);
     return () => clearTimeout(timer);
   }, []);
+
+  // Hide section entirely if variant is "hidden"
+  if (STATS_VARIANT === "hidden") {
+    return null;
+  }
+
+  const stats = statsContent[STATS_VARIANT];
 
   return (
     <section className="w-full px-8 py-5 mt-[-10px] border-t border-gray-100 bg-white/70">
@@ -54,6 +78,19 @@ export default function LogoSection() {
               >
                 {stat.label}
               </span>
+              
+              {'subtext' in stat && (
+                <span
+                  style={{
+                    fontSize: '0.7rem',
+                    color: '#9ca3af',
+                    marginTop: '2px',
+                    fontFamily: "'IBM Plex Sans', sans-serif",
+                  }}
+                >
+                  {stat.subtext}
+                </span>
+              )}
             </div>
           ))}
 
