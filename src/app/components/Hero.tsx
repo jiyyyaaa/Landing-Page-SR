@@ -1,6 +1,45 @@
 import { useEffect, useState } from "react";
 import { MessageSquare, BarChart2, TrendingUp, TrendingDown } from "lucide-react";
 
+// ============================================
+// HERO VARIANT SELECTOR
+// Change this value to switch between hero content variants:
+// "narrative" - Focus on AI Narrative Digest
+// "startup"   - Focus on Startup Affordability  
+// "risk"      - Focus on Proactive Risk Detection
+// ============================================
+const HERO_VARIANT: "narrative" | "startup" | "risk" = "narrative";
+
+const heroContent = {
+  narrative: {
+    badge: "AI-POWERED BRAND INTELLIGENCE",
+    headline: {
+      line1: "Know what the world",
+      highlight: "thinks ",
+      line2: " not just what they say",
+    },
+    subheadline: "SocialRumr's AI distills millions of conversations into daily narrative digests, so you get insights — not data dumps.",
+  },
+  startup: {
+    badge: "BUILT FOR STARTUPS",
+    headline: {
+      line1: "Enterprise social listening.",
+      highlight: "Startup ",
+      line2: " pricing.",
+    },
+    subheadline: "Monitor Twitter, Reddit, LinkedIn & more from $9/mo. Get the brand insights you need without the enterprise price tag.",
+  },
+  risk: {
+    badge: "24/7 BRAND MONITORING",
+    headline: {
+      line1: "Spot brand risks",
+      highlight: "before ",
+      line2: " they become crises",
+    },
+    subheadline: "SocialRumr monitors millions of conversations, scores every mention by risk, and alerts you the moment something needs attention.",
+  },
+};
+
 const avatarTopLeft = "https://images.unsplash.com/photo-1655249493799-9cee4fe983bb?w=400";
 const avatarTopRight = "https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?w=400";
 const avatarBottomLeft = "https://images.unsplash.com/photo-1704054006064-2c5b922e7a1e?w=400";
@@ -77,21 +116,20 @@ export default function Hero() {
         <div className={`mb-5 flex justify-center fade-up delay-1 ${showHero ? "show" : ""}`}>
           <span className="inline-flex items-center gap-2 border border-emerald-300 bg-emerald-50 text-emerald-700 text-xs px-4 py-1.5 rounded-full">
             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-            REAL-TIME INSIGHTS
+            {heroContent[HERO_VARIANT].badge}
           </span>
         </div>
 
         <h1 className={`mb-6 text-[clamp(2.4rem,5vw,3.6rem)] font-bold text-[#0f3324] fade-up delay-2 ${showHero ? "show" : ""}`}>
-          Hear what the Internet <br />
-          is <span className="relative inline-block">talking
+          {heroContent[HERO_VARIANT].headline.line1} 
+          <span className="relative inline-block">{heroContent[HERO_VARIANT].headline.highlight}
             <span className="absolute left-0 w-full h-[12px] bg-yellow-300 -z-10 bottom-[6px]" />
-          </span> about <br />
-          your brand
+          </span> 
+          {heroContent[HERO_VARIANT].headline.line2}
         </h1>
 
         <p className={`max-w-2xl mx-auto mb-8 text-gray-600 fade-up delay-3 ${showHero ? "show" : ""}`}>
-          SocialRumr monitors conversations across the social web and transforms 
-          millions of mentions into actionable business insights with AI-driven sentiment tracking.
+          {heroContent[HERO_VARIANT].subheadline}
         </p>
 
         <div className={`flex justify-center gap-3 fade-up delay-4 ${showHero ? "show" : ""}`}>

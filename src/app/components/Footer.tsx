@@ -3,6 +3,31 @@ import AnimateOnScroll from './AnimateOnScroll';
 
 const IBM = "'IBM Plex Sans', sans-serif";
 
+// ============================================
+// FOOTER VARIANT SELECTOR
+// Change this value to switch between content variants:
+// "trial"  - Original with free trial CTA
+// "demo"   - Demo-first CTA (PRD-aligned)
+// ============================================
+const FOOTER_VARIANT: "trial" | "demo" = "demo";
+
+const footerContent = {
+  trial: {
+    ctaLabel: "GET STARTED TODAY",
+    ctaHeadline: "Your brand is being talked about right now.",
+    ctaSubtext: "Start listening in under 5 minutes. No credit card required.",
+    primaryCta: "Start Free Trial",
+    secondaryCta: "Request Demo",
+  },
+  demo: {
+    ctaLabel: "SEE IT IN ACTION",
+    ctaHeadline: "Your brand is being talked about right now.",
+    ctaSubtext: "Schedule a 20-minute demo and we'll show you exactly what people are saying.",
+    primaryCta: "Request Demo",
+    secondaryCta: "View Platform",
+  },
+};
+
 // Social icons as inline SVGs (X/Twitter, LinkedIn, Instagram, YouTube)
 function XIcon() {
   return (
@@ -48,6 +73,8 @@ const socials = [
 ];
 
 export default function Footer() {
+  const { ctaLabel, ctaHeadline, ctaSubtext, primaryCta, secondaryCta } = footerContent[FOOTER_VARIANT];
+
   return (
     <footer style={{ background: '#071410', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       {/* Top CTA strip */}
@@ -58,13 +85,15 @@ export default function Footer() {
         >
           <div className="max-w-lg">
             <p style={{ fontSize: '0.68rem', color: '#6dbf8c', fontFamily: IBM, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '10px' }}>
-              Get started today
+              {ctaLabel}
             </p>
             <h3 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 700, color: '#ffffff', fontFamily: IBM, lineHeight: 1.2 }}>
-              Your brand is being talked about<br />right now.
+              {ctaHeadline.split('<br />').map((line, i) => (
+                <span key={i}>{line}{i < ctaHeadline.split('<br />').length - 1 && <br />}</span>
+              ))}
             </h3>
             <p style={{ marginTop: '10px', fontSize: '0.875rem', color: '#4d7a62', fontFamily: IBM, lineHeight: 1.7 }}>
-              Start listening in under 5 minutes. No credit card required.
+              {ctaSubtext}
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
@@ -74,7 +103,7 @@ export default function Footer() {
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
             >
-              Start Free Trial
+              {primaryCta}
             </button>
             <button
               className="rounded-full px-7 py-3 transition-opacity"
@@ -82,7 +111,7 @@ export default function Footer() {
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.75')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
             >
-              Request Demo
+              {secondaryCta}
             </button>
           </div>
         </div>

@@ -1,8 +1,17 @@
-import { ArrowRight, AlertTriangle, TrendingUp, Radio, MessageSquare } from 'lucide-react';
+import { ArrowRight, AlertTriangle, TrendingUp, Radio, MessageSquare, FileText, Users, Sparkles } from 'lucide-react';
 import AnimateOnScroll from './AnimateOnScroll';
 
 const IBM = "'IBM Plex Sans', sans-serif";
 const SERIF = "'Playfair Display', Georgia, serif";
+
+// ============================================
+// SOLUTION SECTION VARIANT SELECTOR
+// Change this value to switch between content variants:
+// "general"  - Original use cases (Crisis, Analytics, Unified Feed)
+// "startup"  - Startup-focused use cases (AI Digest, Affordable, Consulting)
+// "features" - Feature-focused (Risk Score, Share of Voice, Reports)
+// ============================================
+const SOLUTION_VARIANT: "general" | "startup" | "features" = "startup";
 
 // ─── Mockup 1: Crisis alert ──────────────────────────────────────────────────
 function AlertMockup() {
@@ -179,59 +188,169 @@ function UnifiedMockup() {
 }
 
 // ─── Use case data ───────────────────────────────────────────────────────────
-const cases = [
-  {
-    label: 'Crisis Detection',
-    heading: "Spot problems early,\nnot when it's too late",
-    body: "By the time a PR crisis shows up in your email, it's already trending. socialrumr watches every channel in real time and fires an alert the moment something looks wrong — so you respond in minutes, not days.",
-    bullets: ['Spike detection across Twitter, Reddit, forums & news', 'Configurable severity thresholds per brand keyword', 'Instant Slack, email & webhook notifications'],
-    Mockup: AlertMockup,
-    imageLeft: true,
-    bg: '#ffffff',
-    labelColor: '#0f3324',
-    headingColor: '#0a1c12',
-    bodyColor: '#4a6b5a',
-    bulletColor: '#2a5040',
-    pillBg: '#e8f5ee',
-    pillText: '#0f3324',
-    btnBg: '#0f3324',
-    btnText: '#ffffff',
-  },
-  {
-    label: 'Brand Intelligence',
-    heading: 'See the story\nbehind the data',
-    body: "Numbers without context are just noise. socialrumr layers in sentiment trends, topic clusters, and competitive benchmarks so you understand not just what people are saying — but why, and what to do about it.",
-    bullets: ['6-month sentiment trend lines per channel', 'AI topic clustering with theme summaries', 'Competitor share-of-voice benchmarking'],
-    Mockup: AnalyticsMockup,
-    imageLeft: false,
-    bg: '#0a1c12',
-    labelColor: '#6dbf8c',
-    headingColor: '#ffffff',
-    bodyColor: '#6b9080',
-    bulletColor: '#4d7a62',
-    pillBg: '#1a3d28',
-    pillText: '#6dbf8c',
-    btnBg: '#6dbf8c',
-    btnText: '#0a1c12',
-  },
-  {
-    label: 'Unified Listening',
-    heading: 'Stop checking everywhere.\nSee everything in one place',
-    body: "Twitter, Reddit, TikTok, Instagram, news sites, niche forums — all streaming into a single, searchable feed. Filter by platform, sentiment, or keyword. Share mentions with your team without forwarding yet another screenshot.",
-    bullets: ['One feed for every platform, updated in real time', 'Filter by platform, sentiment, keyword, or author', 'Team workspace with annotations & assignments'],
-    Mockup: UnifiedMockup,
-    imageLeft: true,
-    bg: '#ffffff',
-    labelColor: '#0f3324',
-    headingColor: '#0a1c12',
-    bodyColor: '#4a6b5a',
-    bulletColor: '#2a5040',
-    pillBg: '#e8f5ee',
-    pillText: '#0f3324',
-    btnBg: '#0f3324',
-    btnText: '#ffffff',
-  },
-];
+const casesContent = {
+  general: [
+    {
+      label: 'Crisis Detection',
+      heading: "Spot problems early,\nnot when it's too late",
+      body: "By the time a PR crisis shows up in your email, it's already trending. socialrumr watches every channel in real time and fires an alert the moment something looks wrong — so you respond in minutes, not days.",
+      bullets: ['Spike detection across Twitter, Reddit, forums & news', 'Configurable severity thresholds per brand keyword', 'Instant Slack, email & webhook notifications'],
+      Mockup: AlertMockup,
+      imageLeft: true,
+      bg: '#ffffff',
+      labelColor: '#0f3324',
+      headingColor: '#0a1c12',
+      bodyColor: '#4a6b5a',
+      bulletColor: '#2a5040',
+      pillBg: '#e8f5ee',
+      pillText: '#0f3324',
+      btnBg: '#0f3324',
+      btnText: '#ffffff',
+    },
+    {
+      label: 'Brand Intelligence',
+      heading: 'See the story\nbehind the data',
+      body: "Numbers without context are just noise. socialrumr layers in sentiment trends, topic clusters, and competitive benchmarks so you understand not just what people are saying — but why, and what to do about it.",
+      bullets: ['6-month sentiment trend lines per channel', 'AI topic clustering with theme summaries', 'Competitor share-of-voice benchmarking'],
+      Mockup: AnalyticsMockup,
+      imageLeft: false,
+      bg: '#0a1c12',
+      labelColor: '#6dbf8c',
+      headingColor: '#ffffff',
+      bodyColor: '#6b9080',
+      bulletColor: '#4d7a62',
+      pillBg: '#1a3d28',
+      pillText: '#6dbf8c',
+      btnBg: '#6dbf8c',
+      btnText: '#0a1c12',
+    },
+    {
+      label: 'Unified Listening',
+      heading: 'Stop checking everywhere.\nSee everything in one place',
+      body: "Twitter, Reddit, LinkedIn, Facebook, and Google Alerts — all streaming into a single, searchable feed. Filter by platform, sentiment, or keyword. Share mentions with your team without forwarding yet another screenshot.",
+      bullets: ['One feed for every platform, updated in real time', 'Filter by platform, sentiment, keyword, or author', 'Team workspace with annotations & assignments'],
+      Mockup: UnifiedMockup,
+      imageLeft: true,
+      bg: '#ffffff',
+      labelColor: '#0f3324',
+      headingColor: '#0a1c12',
+      bodyColor: '#4a6b5a',
+      bulletColor: '#2a5040',
+      pillBg: '#e8f5ee',
+      pillText: '#0f3324',
+      btnBg: '#0f3324',
+      btnText: '#ffffff',
+    },
+  ],
+  startup: [
+    {
+      label: 'AI Narrative Digest',
+      heading: "Wake up to insights,\nnot data dumps",
+      body: "Every 24 hours, our AI reads every mention, clusters themes, and writes you a narrative briefing. It's like having a research analyst who never sleeps — summarizing what people think about your brand and why.",
+      bullets: ['Daily AI-synthesized narrative of brand conversations', 'Key themes, emerging topics, and sentiment shifts', 'Delivered to your inbox or dashboard by 8am'],
+      Mockup: AnalyticsMockup,
+      imageLeft: true,
+      bg: '#ffffff',
+      labelColor: '#0f3324',
+      headingColor: '#0a1c12',
+      bodyColor: '#4a6b5a',
+      bulletColor: '#2a5040',
+      pillBg: '#e8f5ee',
+      pillText: '#0f3324',
+      btnBg: '#0f3324',
+      btnText: '#ffffff',
+    },
+    {
+      label: 'Startup Pricing',
+      heading: 'Enterprise power.\nStartup price.',
+      body: "Other social listening tools want $500-2000/mo. We believe startups deserve the same intelligence without the enterprise price tag. Start at $9/mo and scale as you grow.",
+      bullets: ['Full feature access from $9/mo (not $500+)', 'No annual contracts or hidden fees', 'Scale up only when you need to'],
+      Mockup: AlertMockup,
+      imageLeft: false,
+      bg: '#0a1c12',
+      labelColor: '#6dbf8c',
+      headingColor: '#ffffff',
+      bodyColor: '#6b9080',
+      bulletColor: '#4d7a62',
+      pillBg: '#1a3d28',
+      pillText: '#6dbf8c',
+      btnBg: '#6dbf8c',
+      btnText: '#0a1c12',
+    },
+    {
+      label: 'Human Consulting',
+      heading: 'AI + humans\nwhen you need it',
+      body: "Sometimes you need more than a dashboard. Premium users can schedule calls with our brand intelligence experts for strategic advice, campaign reviews, and crisis response planning.",
+      bullets: ['Schedule 1:1 calls with brand experts', 'Get strategic recommendations, not just data', 'Meeting notes and action items tracked for you'],
+      Mockup: UnifiedMockup,
+      imageLeft: true,
+      bg: '#ffffff',
+      labelColor: '#0f3324',
+      headingColor: '#0a1c12',
+      bodyColor: '#4a6b5a',
+      bulletColor: '#2a5040',
+      pillBg: '#e8f5ee',
+      pillText: '#0f3324',
+      btnBg: '#0f3324',
+      btnText: '#ffffff',
+    },
+  ],
+  features: [
+    {
+      label: 'Risk Scoring',
+      heading: "Every mention scored,\nso you know what matters",
+      body: "Not all mentions are equal. Our AI assigns a 0-100 risk score to every conversation, so your team focuses on what could hurt (or help) your brand — not noise.",
+      bullets: ['0-100 risk score on every mention', 'Priority Triage surfaces urgent items first', 'Configurable alert thresholds by risk level'],
+      Mockup: AlertMockup,
+      imageLeft: true,
+      bg: '#ffffff',
+      labelColor: '#0f3324',
+      headingColor: '#0a1c12',
+      bodyColor: '#4a6b5a',
+      bulletColor: '#2a5040',
+      pillBg: '#e8f5ee',
+      pillText: '#0f3324',
+      btnBg: '#0f3324',
+      btnText: '#ffffff',
+    },
+    {
+      label: 'Share of Voice',
+      heading: 'Know where you stand,\nnot just how you\'re doing',
+      body: "Track your brand's presence against competitors in real time. See who's winning the conversation, which topics you own, and where you're losing ground.",
+      bullets: ['Real-time competitor mention tracking', 'Share of Voice donut charts by platform', 'Alerts when competitors overtake you'],
+      Mockup: AnalyticsMockup,
+      imageLeft: false,
+      bg: '#0a1c12',
+      labelColor: '#6dbf8c',
+      headingColor: '#ffffff',
+      bodyColor: '#6b9080',
+      bulletColor: '#4d7a62',
+      pillBg: '#1a3d28',
+      pillText: '#6dbf8c',
+      btnBg: '#6dbf8c',
+      btnText: '#0a1c12',
+    },
+    {
+      label: 'Automated Reports',
+      heading: 'Weekly intel,\ndelivered automatically',
+      body: "Get a comprehensive brand report in your inbox every week (or daily). Brand Health Score, top mentions, sentiment trends, competitor movements — all in one PDF.",
+      bullets: ['Weekly or daily automated reports', 'Brand Health Score (0-100) tracking', 'PDF export, email delivery, team sharing'],
+      Mockup: UnifiedMockup,
+      imageLeft: true,
+      bg: '#ffffff',
+      labelColor: '#0f3324',
+      headingColor: '#0a1c12',
+      bodyColor: '#4a6b5a',
+      bulletColor: '#2a5040',
+      pillBg: '#e8f5ee',
+      pillText: '#0f3324',
+      btnBg: '#0f3324',
+      btnText: '#ffffff',
+    },
+  ],
+};
+
+const cases = casesContent[SOLUTION_VARIANT];
 
 // ─── Main component ──────────────────────────────────────────────────────────
 export default function SolutionSection() {
@@ -293,7 +412,7 @@ export default function SolutionSection() {
                       onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
                       onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                     >
-                      Explore Product
+                      Request Demo
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>

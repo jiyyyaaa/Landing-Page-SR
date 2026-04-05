@@ -65,7 +65,7 @@ export default function Header() {
             onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.opacity = '0.85')}
             onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.opacity = '1')}
           >
-            Start Now
+            Request Demo
           </button>
         </div>
 
@@ -103,7 +103,7 @@ export default function Header() {
             className="rounded-full px-5 py-2.5 w-fit"
             style={{ background: '#0f3324', color: '#ffffff', fontFamily: IBM, fontSize: '0.875rem', fontWeight: 500, border: 'none', cursor: 'pointer' }}
           >
-            Start Now
+            Request Demo
           </button>
         </div>
       )}

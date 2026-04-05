@@ -2,6 +2,33 @@ import { useEffect, useRef, useState } from 'react';
 
 const IBM = "'IBM Plex Sans', sans-serif";
 
+// ============================================
+// DASHBOARD PREVIEW VARIANT SELECTOR
+// Change this value to switch between content variants:
+// "command"   - Command center focus (general)
+// "insights"  - AI insights focus (narrative digest)
+// "control"   - Control & monitoring focus (risk)
+// ============================================
+const DASHBOARD_VARIANT: "command" | "insights" | "control" = "insights";
+
+const dashboardContent = {
+  command: {
+    badge: "LIVE PLATFORM",
+    headline: "Everything your team needs,",
+    headline2: "in one command center",
+  },
+  insights: {
+    badge: "AI-POWERED DASHBOARD",
+    headline: "From noise to narrative",
+    headline2: "in 24 hours",
+  },
+  control: {
+    badge: "BRAND CONTROL CENTER",
+    headline: "Monitor, score, and act —",
+    headline2: "all in one place",
+  },
+};
+
 function clamp(val: number, min: number, max: number) {
   return Math.min(Math.max(val, min), max);
 }
@@ -25,7 +52,8 @@ export default function DashboardPreview() {
 
       const scrolledIn = windowH - rect.top;
 
-      const animRange = sectionH * 0.6; // slightly longer animation
+      // Longer animation path - completes when element is ~halfway through viewport
+      const animRange = sectionH * 1.2; // Much longer animation range
       const raw = clamp(scrolledIn / animRange, 0, 1);
 
       setProgress(easeOutCubic(raw));
@@ -36,13 +64,11 @@ export default function DashboardPreview() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 🔥 STRONGER + BETTER MOTION
-  const rotateX = 45 * (1 - progress);
-  const scale   = 0.75 + 0.25 * progress;
-  const opacity = 0.15 + 0.85 * progress;
-  const translateY = 40 * (1 - progress);
+  const rotateX = 20 * (1 - progress); // More dramatic lean back initially
+  const scale   = 0.7 + 0.3 * progress; // Start smaller for bigger popup effect
+  const opacity = 0.2 + 0.8 * progress;
+  const translateY = 60 * (1 - progress); // More vertical movement
 
-  // 🔥 BETTER SHADOW
   const shadowY     = Math.round(10 + 60 * (1 - progress));
   const shadowBlur  = Math.round(30 + 120 * (1 - progress));
   const shadowAlpha = (0.06 + 0.16 * (1 - progress)).toFixed(2);
@@ -55,6 +81,17 @@ export default function DashboardPreview() {
         background: 'linear-gradient(to bottom, #ffffff 0%, #f2f8f4 15%, #cce5d8 35%, #1e4733 58%, #0a1c12 100%)',
       }}
     >
+      {/* UNIFIED GRADIENT OVERLAY - applies to entire section */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(10,28,18,0.4) 70%, rgba(10,28,18,0.8) 85%, #0a1c12 100%)',
+          pointerEvents: 'none',
+          zIndex: 20,
+        }}
+      />
+
       {/* TEXT */}
       <div className="relative z-10 text-center pt-6 pb-6">
         <span
@@ -68,7 +105,7 @@ export default function DashboardPreview() {
             textTransform: 'uppercase'
           }}
         >
-          Live platform
+          {dashboardContent[DASHBOARD_VARIANT].badge}
         </span>
 
         <h2
@@ -80,8 +117,8 @@ export default function DashboardPreview() {
             lineHeight: 1.3
           }}
         >
-          Everything your team needs,<br />
-          in one command center
+          {dashboardContent[DASHBOARD_VARIANT].headline}<br />
+          {dashboardContent[DASHBOARD_VARIANT].headline2}
         </h2>
       </div>
 
@@ -120,9 +157,10 @@ export default function DashboardPreview() {
             transformOrigin: '50% 0%',
             opacity,
             width: 'min(90%, 1040px)',
-            borderRadius: '18px',
+            // borderRadius: '10px',
             overflow: 'hidden',
-            boxShadow: `0 ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowAlpha}), 0 0 0 1px rgba(255,255,255,0.08)`,
+            backfaceVisibility: 'hidden',
+            // boxShadow: `0 ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowAlpha}), 0 0 0 1px rgba(255,255,255,0.08)`,
           }}
         >
           <img
@@ -130,24 +168,6 @@ export default function DashboardPreview() {
             alt="socialrumr dashboard"
             style={{ width: '100%', display: 'block' }}
             draggable={false}
-          />
-
-          {/* 🔥 PERFECT MERGE INTO GREEN */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: `
-                linear-gradient(
-                  to bottom,
-                  transparent 20%,
-                  rgba(10,28,18,0.4) 60%,
-                  rgba(10,28,18,0.85) 85%,
-                  #0a1c12 100%
-                )
-              `,
-              pointerEvents: 'none',
-            }}
           />
         </div>
       </div>
@@ -159,6 +179,7 @@ export default function DashboardPreview() {
           bottom: 0,
           left: 0,
           right: 0,
+          // bottom: '-60px', // 👈 extend past bottom
           height: '42%',
           backgroundImage:
             'linear-gradient(rgba(109,191,140,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(109,191,140,0.04) 1px, transparent 1px)',
